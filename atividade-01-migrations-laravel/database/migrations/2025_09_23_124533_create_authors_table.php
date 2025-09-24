@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigincrements('id')->primary();
             $table->string('name');
             $table->string('email')->unique();
-            $table->date('birth_date')->NULL;
+            $table->date('birth_date')->nullable();
             $table->timestamps();
         });
     }
