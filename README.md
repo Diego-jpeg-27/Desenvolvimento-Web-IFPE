@@ -15,9 +15,10 @@ Curso Superior em **Tecnologia em Sistemas para Internet (TSI)** – IFPE Campus
 
 ## 📂 Lista de Atividades
 
-| Nº  | Tema da Atividade            | Pasta                                | Data       |
-|-----|------------------------------|--------------------------------------|------------|
-| 01  | Migrations com Laravel       | `atividade-01-migrations-laravel`    | 22/09/2025 |
+| Nº  | Tema da Atividade            | Pasta                                | Data inicial | Data final   |
+|-----|------------------------------|--------------------------------------|--------------|--------------|
+| 01  | Migrations com Laravel       | `atividade-01-migrations-laravel`    | 22/09/2025   | 26/09/2025   |
+
 
 ⚠️ As próximas atividades serão adicionadas ao longo da disciplina. ⚠️
 
