@@ -3,62 +3,53 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Anime;
 
 class AnimeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $animes = Anime::all();
+        return view('animes.index', compact('animes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $animes = Anime::all();
+        return view('animes.create', compact('animes'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        Anime::create($request->all());
+        return redirect()->route('animes.create')->with('success', 'Anime criado com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Anime $anime)
     {
-        //
+        return view('animes.show', compact('anime'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Anime $anime)
     {
-        //
+        return view('animes.edit', compact('anime'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Anime $anime)
     {
-        //
+        $anime->update($request->all());
+        return redirect()->route('animes.create')->with('success', 'Anime atualizado com sucesso!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Anime $anime)
     {
-        //
+        $anime->delete();
+        return redirect()->route('animes.create')->with('success', 'Anime deletado com sucesso!');
+    }
+
+    public function lista()
+    {
+        $animes = Anime::all();
+        return view('animes.lista', compact('animes'));
     }
 }
