@@ -22,7 +22,7 @@ class AnimeController extends Controller
     public function store(Request $request)
     {
         Anime::create($request->all());
-        return redirect()->route('animes.create')->with('success', 'Anime criado com sucesso!');
+        return redirect('/')->with('success', 'Anime criado com sucesso!');
     }
 
     public function show(Anime $anime)
@@ -38,13 +38,13 @@ class AnimeController extends Controller
     public function update(Request $request, Anime $anime)
     {
         $anime->update($request->all());
-        return redirect()->route('animes.create')->with('success', 'Anime atualizado com sucesso!');
+        return redirect('/')->with('success', 'Anime atualizado com sucesso!');
     }
 
     public function destroy(Anime $anime)
     {
         $anime->delete();
-        return redirect()->route('animes.create')->with('success', 'Anime deletado com sucesso!');
+        return redirect('/')->with('success', 'Anime deletado com sucesso!');
     }
 
     public function lista()
