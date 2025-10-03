@@ -41,8 +41,6 @@ table, th, td {
             </tr>
         @endforeach
     </table>
-
-    <p>Esta tabela segue o modelo básico em HTML com bordas aplicadas.</p>
-
+    <a href="{{ url('/') }}" class="btn btn-secondary" style="margin-bottom: -220px; display: inline-block;"> Voltar </a>
 </body>
 </html>

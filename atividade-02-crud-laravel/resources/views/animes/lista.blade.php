@@ -15,5 +15,5 @@
         @endforelse
     </ul>
 
-    <a href="{{ route('animes.create') }}">← Voltar para Cadastro</a>
+   <a href="{{ url('/') }}" class="btn btn-secondary" style="margin-bottom: -220px; display: inline-block;"> Voltar </a>
 @endsection

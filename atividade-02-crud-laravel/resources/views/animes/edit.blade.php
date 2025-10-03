@@ -1,9 +1,8 @@
 <html>
-<head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-4">
+ <head>
+  </head>
+   <body>
+     <div class="container mt-4">
         <h1>Editar Anime</h1>
 
         <form action="{{ route('animes.update', $anime) }}" method="POST">
@@ -38,5 +37,5 @@
             <button type="submit" class="btn btn-success">Atualizar</button>
         </form>
     </div>
-</body>
+  </body>
 </html>
