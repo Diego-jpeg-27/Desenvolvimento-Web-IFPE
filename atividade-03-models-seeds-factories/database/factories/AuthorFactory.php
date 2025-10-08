@@ -13,7 +13,8 @@ class AuthorFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'birth_date' => $this->faker->date()
+            'birth_date' => $this->faker->date(),
+            'email' => $this->faker->unique()->safeEmail(),
         ];
     }
 }
