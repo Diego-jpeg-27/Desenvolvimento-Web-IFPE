@@ -15,12 +15,12 @@ Curso Superior em **Tecnologia em Sistemas para Internet (TSI)** – IFPE Campus
 
 ### Lista de Atividades
 
-
-| Nº  | Tema da Atividade            | Pasta                                | Data inicial | Data final  | Continuação |
-|-----|------------------------------|--------------------------------------|--------------|-------------| ----------- |           
-| 01  | Migrations com Laravel       | `atividade-01-migrations-laravel`    | 22/09/2025   | 26/09/2025  |             |
-| 02  | CRUD com Laravel (MVC)       | `atividade-02-crud-laravel`          | 27/09/2025   | 03/10/2025  |  CSS / JS   |
-| 03  | Models, Seeds e Factories    | `atividade-03-models-seeds-factories`| 04/10/2025   | 10/10/2025  |             |
+| Nº  | Tema da Atividade                                                  | Pasta                                       | Data inicial | Data final  | Continuação |
+|-----|--------------------------------------------------------------------|---------------------------------------------|--------------|-------------|--------------|
+| 01  | Migrations com Laravel                                             | `atividade-01-migrations-laravel`           | 22/09/2025   | 26/09/2025  |              |
+| 02  | CRUD com Laravel (MVC)                                             | `atividade-02-crud-laravel`                 | 27/09/2025   | 03/10/2025  | CSS / JS     |
+| 03  | Models, Seeds e Factories                                          | `atividade-03-models-seeds-factories`       | 04/10/2025   | 10/10/2025  |              |
+| 04  | Relationships N:N, Eloquent + Library                              | `atividade-04-relationships-eloquent`       | 09/10/2025   | 17/10/2025  |              |
 
 ⚠️ As próximas atividades serão adicionadas ao longo da disciplina. ⚠️
 
