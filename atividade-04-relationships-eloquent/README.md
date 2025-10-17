@@ -20,7 +20,7 @@ Também utilizei **factories**, **seeders** e os métodos nativos do Eloquent pa
 ---
 ## Objetivos da Atividade
 
-O objetivo foi construir um novo projeto Laravel, configurá-lo corretamente e implementar a funcionalidade de **empréstimos de livros**, usando relacionamentos N:N com o Eloquent ORM.
+O objetivo foi construir um novo projeto Laravel, configurá-lo corretamente e implementar a funcionalidade de **empréstimos de livros**, usando relacionamentos N:N com o Eloquent ORM e testes com **Tinker**.
 
 As ações realizadas foram:
 
@@ -34,6 +34,13 @@ As ações realizadas foram:
 - Criar um seeder responsável por popular o banco de dados com registros variados de empréstimos.
 - Executar os comandos do Laravel Artisan para aplicar as migrations, rodar os seeders e garantir que o sistema funcione corretamente.
 - Consolidar o funcionamento geral do sistema de biblioteca, agora com a capacidade de registrar, consultar e testar empréstimos entre usuários e livros.
+
+### Aprendi a Trabalhar com o **Tinker** para testar comandos, fazer consultas e validar dados.  
+- Aplicar conceitos de **Lazy Loading** e **Eager Loading**.  
+- Analisar e comparar desempenho de consultas com e sem otimizações.  
+- Utilizar funções agregadas (`avg`, `sum`, `min`, `max`) para análises estatísticas.  
+- Criar novos registros diretamente no Tinker com relacionamentos completos.
+
 ---
 
 ## Pré-requisitos e Preparação do Ambiente
@@ -44,6 +51,6 @@ Antes de iniciar a atividade, foi necessário garantir o ambiente de desenvolvim
 
 - PHP instalado  
 - Composer configurado (gerenciador de dependências do PHP)  
-- MySQL ativo  
+- MySQL  
 - Laravel instalado corretamente no projeto  
 - Git configurado para versionamento
