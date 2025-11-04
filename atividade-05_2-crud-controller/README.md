@@ -1,59 +1,58 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Atividade 05.2 – CRUD para Category, Author e Publisher com Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Desenvolvimento Web 2 – IFPE Campus Igarassu (2025)**
 
-## About Laravel
+Esta atividade teve como objetivo a construção completa das funcionalidades **CRUD (Create, Read, Update, Delete)** para as entidades **Category**, **Author** e **Publisher**, utilizando **Controllers**, **Views com Bootstrap**, e **rotas resource** no Laravel.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Descrição
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Nesta etapa do projeto, implementei a lógica de CRUD para as entidades mencionadas acima, com base no padrão Resource Controller do Laravel. O `CategoryController` foi desenvolvido como referência e, a partir dele, foram replicadas as implementações para `AuthorController` e `PublisherController`.
 
-## Learning Laravel
+Foram criadas interfaces visuais completas com **Bootstrap 5** e **Bootstrap Icons**, incluindo tabelas, formulários e botões padronizados, permitindo operações intuitivas no sistema.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Objetivos da Atividade
 
-## Laravel Sponsors
+As ações realizadas nesta atividade foram:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- Criar controllers com CRUD:
+  - `CategoryController`
+  - `AuthorController`
+  - `PublisherController`
+- Implementar todos os métodos resource:
+  `index`, `create`, `store`, `show`, `edit`, `update`, `destroy`
+- Registrar rotas RESTful com `Route::resource()`
+- Criar views Blade:
+  - `index.blade.php`, `create.blade.php`, `edit.blade.php`, `show.blade.php`
+- Validar entradas nos formulários e exibir feedback com mensagens flash
+- Testar CRUD completo no navegador
+- Integrar **Bootstrap Icons** para botões
+- Garantir persistência de dados no MySQL
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Aprendi a:
 
-## Contributing
+Durante esta atividade, desenvolvi competências essenciais, como:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Estruturação completa de CRUD no Laravel  
+Uso correto de validação de dados no controller  
+Navegação de rotas RESTful com Laravel Resource  
+Componentização e reaproveitamento de layouts com Blade  
+Integração de bibliotecas visuais (Bootstrap + Icons)  
+Melhores práticas de UX com feedback ao usuário  
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Requisitos
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Autenticação configurada
+- Projeto Laravel funcional e configurado
+- PHP e Composer instalados
+- Node.js e NPM instalados (para uso do Vite)
+- Banco de dados MySQL configurado
+- Laravel UI instalado via Composer
+- Ambiente pronto para rodar `php artisan serve` e `npm run dev`
