@@ -1,67 +1,90 @@
-# Atividade 05.5 – Controller, Rotas e Views para a Entidade Book
+# Atividades 06.1 e 06.2 – Gestão de Usuários e Sistema de Empréstimos
 
 **Desenvolvimento Web 2 – IFPE Campus Igarassu (2025)**
 
-Esta atividade teve como objetivo construir toda a estrutura de operações da entidade **Book**, implementando **Controllers**, **Views**, rotas específicas e rotas RESTful, além de duas abordagens diferentes para a operação de criação: uma baseada em **entrada manual de IDs** e outra utilizando **campos select**, tornando a interação mais intuitiva para o usuário.
+Estas atividades tiveram como objetivo ampliar o sistema de biblioteca com duas funcionalidades essenciais:  
+1. **Gerenciamento de usuários através de Controller e Views dedicadas**.  
+2. **Implementação completa de um sistema de empréstimos**, conectando livros e usuários de forma dinâmica, incluindo histórico, devoluções e rotas específicas.
 
 ---
 
 ## Descrição
 
-Nesta etapa, desenvolvi todas as funcionalidades necessárias para gerenciar livros dentro do sistema, considerando que a entidade Book possui relacionamentos diretos com **Author**, **Publisher** e **Category**.
+Na Atividade **6.1**, foi estruturado o **UserController** responsável por listar, exibir e editar usuários já cadastrados no sistema. A criação e exclusão foram omitidas, pois o registro de usuários ocorre via autenticação padrão do Laravel.
 
-Foram criadas duas versões distintas para a funcionalidade de cadastro:
+Foram criadas as views de listagem, visualização e edição, todas integradas com Bootstrap e paginação nativa.
 
-- Uma versão em que o usuário informa manualmente os IDs das entidades relacionadas.  
-- Uma segunda versão que utiliza listas dropdown para selecionar autor, editora e categoria, carregadas dinamicamente no formulário.
+Na Atividade **6.2**, foi desenvolvido o **sistema de empréstimos** da biblioteca. A implementação incluiu:
 
-Além disso, implementei as operações de **editar**, **atualizar**, **listar**, **visualizar** e **deletar**, garantindo que os dados relacionados fossem carregados corretamente e exibidos com clareza no frontend.
+- Criação do BorrowingController  
+- Configuração de rotas específicas para registrar empréstimos e devoluções  
+- Atualização das views de Books e Users para exibir histórico de empréstimos  
+- Ajustes nos models para suporte adequado aos relacionamentos via tabela pivot  
+
+O sistema agora permite registrar empréstimos, registrar devoluções, visualizar os livros emprestados por um usuário e o histórico de empréstimos de cada livro.
 
 ---
 
 ## Objetivos da Atividade
 
-As ações realizadas nesta atividade foram:
+As ações realizadas foram:
 
-- Criar rotas exclusivas para as duas versões de criação da entidade Book.  
-- Implementar métodos específicos no controller para cada abordagem de criação.  
-- Desenvolver formulários completos com validação, usando Bootstrap como base visual.  
-- Criar as páginas de:
-  - criação com input de ID  
-  - criação com selects  
-  - edição  
-  - visualização dos detalhes  
-  - listagem  
-- Carregar dinamicamente autores, editoras e categorias nos formulários de select.  
-- Exibir na listagem o autor relacionado ao livro, com paginação.  
-- Organizar o fluxo RESTful para index, show, edit, update e delete.  
-- Exibir mensagens de sucesso após cada operação.  
-- Garantir que todos os relacionamentos fossem carregados corretamente ao exibir detalhes.  
-- Integrar paginação utilizando o template do Bootstrap.
+### **Atividade 6.1 – Controller e Views de User**
+- Criar o `UserController` como resource controller.  
+- Implementar as operações:
+  - Listar usuários (index)  
+  - Visualizar um usuário (show)  
+  - Editar usuário (edit e update)  
+- Aplicar paginação e exibir dados em tabelas com Bootstrap.  
+- Criar as views:
+  - `index.blade.php`  
+  - `show.blade.php`  
+  - `edit.blade.php`  
+- Integrar botões de navegação e feedback visual de edição.
+
+---
+
+### **Atividade 6.2 – Sistema de Empréstimos**
+- Criar rotas específicas para:
+  - Registrar empréstimos  
+  - Registrar devoluções  
+  - Exibir empréstimos de um usuário  
+- Implementar o `BorrowingController` com:
+  - Registro de empréstimos  
+  - Registro de devoluções  
+  - Histórico de empréstimos por usuário  
+- Atualizar o método `show` do BookController para carregar lista de usuários.  
+- Ajustar os models Book e User para suportar o relacionamento com pivot.  
+- Atualizar as views `books.show` e `users.show` para:
+  - Exibir histórico de empréstimos  
+  - Mostrar status (em aberto ou devolvido)  
+  - Exibir botões de ação para devolução  
+- Validar dados antes de registrar um empréstimo.  
+- Exibir mensagens de sucesso após as operações.  
 
 ---
 
 ### Aprendi a:
 
-Durante esta atividade, aprimorei habilidades importantes, como:
-
-Construção de múltiplas abordagens para a mesma ação (Create)  
-Uso de relacionamentos 1:N em interfaces reais  
-Aplicação de validação robusta antes de salvar dados  
-Criação de formulários dinâmicos usando selects populados pelo controller  
-Organização de rotas específicas coexistindo com rotas RESTful  
-Exibição de dados relacionados (autor, editora e categoria) de forma clara  
-Aplicação de paginação estilizada com Bootstrap  
-Uso de eager loading para otimizar consultas ao banco  
+Gerenciar usuários através de controllers dedicados  
+Aplicar paginação e exibição de dados com Bootstrap  
+Criar relacionamentos muitos-para-muitos com tabela pivot  
+Registrar e controlar empréstimos com datas de retirada e devolução  
+Integrar formulários e ações personalizadas dentro de views existentes  
+Exibir históricos em diferentes perspectivas (por livro e por usuário)  
+Atualizar models para funcionamento correto de eager loading  
+Manter padronização RESTful junto a rotas específicas de ação  
 
 ---
 
 ### Requisitos
 
 - Autenticação configurada previamente  
-- Projeto Laravel funcional e totalmente configurado  
+- Projeto Laravel funcional e configurado  
+- Models User, Book e Borrowing criados  
 - PHP e Composer instalados  
-- Node.js e NPM instalados (para compilação de assets)  
-- Banco de dados MySQL configurado com as tabelas Author, Publisher, Category e Book  
-- Laravel UI instalado  
+- Node.js e NPM instalados  
+- Banco MySQL configurado  
 - Ambiente pronto para rodar `php artisan serve` e `npm run dev`  
+
+---
