@@ -1,59 +1,84 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Atividades 06.1 e 06.2 – Gestão de Usuários e Sistema de Empréstimos
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Desenvolvimento Web 2 – IFPE Campus Igarassu (2025)**
 
-## About Laravel
+Estas atividades tiveram como objetivo ampliar o sistema de biblioteca com duas funcionalidades essenciais:  
+1. **Gerenciamento de usuários através de Controller e Views dedicadas**.  
+2. **Implementação completa de um sistema de empréstimos**, conectando livros e usuários de forma dinâmica, incluindo histórico, devoluções e rotas específicas.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Descrição
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Na Atividade **6.1**, foi estruturado o **UserController** responsável por listar, exibir e editar usuários já cadastrados no sistema. A criação e exclusão foram omitidas, pois o registro de usuários ocorre via autenticação padrão do Laravel.
 
-## Learning Laravel
+Foram criadas as views de listagem, visualização e edição, todas integradas com Bootstrap e paginação nativa.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Na Atividade **6.2**, foi desenvolvido o **sistema de empréstimos** da biblioteca. A implementação incluiu:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Criação do BorrowingController  
+- Configuração de rotas específicas para registrar empréstimos e devoluções  
+- Atualização das views de Books e Users para exibir histórico de empréstimos  
+- Ajustes nos models para suporte adequado aos relacionamentos via tabela pivot  
 
-## Laravel Sponsors
+O sistema agora permite registrar empréstimos, registrar devoluções, visualizar os livros emprestados por um usuário e o histórico de empréstimos de cada livro.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## Objetivos da Atividade
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+As ações realizadas foram:
 
-## Contributing
+### **Atividade 6.1 – Controller e Views de User**
+- Criar o `UserController` como resource controller.  
+- Implementar as operações:
+  - Listar usuários (index)  
+  - Visualizar um usuário (show)  
+  - Editar usuário (edit e update)  
+- Aplicar paginação e exibir dados em tabelas com Bootstrap.  
+- Criar as views:
+  - `index.blade.php`  
+  - `show.blade.php`  
+  - `edit.blade.php`  
+- Integrar botões de navegação e feedback visual de edição.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+### **Atividade 6.2 – Sistema de Empréstimos**
+- Criar rotas específicas para:
+  - Registrar empréstimos  
+  - Registrar devoluções  
+  - Exibir empréstimos de um usuário  
+- Implementar o `BorrowingController` com:
+  - Registro de empréstimos  
+  - Registro de devoluções  
+  - Histórico de empréstimos por usuário  
+- Atualizar o método `show` do BookController para carregar lista de usuários.  
+- Ajustar os models Book e User para suportar o relacionamento com pivot.  
+- Atualizar as views `books.show` e `users.show` para:
+  - Exibir histórico de empréstimos  
+  - Mostrar status (em aberto ou devolvido)  
+  - Exibir botões de ação para devolução  
+- Validar dados antes de registrar um empréstimo.  
+- Exibir mensagens de sucesso após as operações.  
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+### Aprendi a:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Durante estas atividades, desenvolvi habilidades importantes, como:
 
-## License
+Gerenciar usuários através de controllers dedicados  
+Aplicar paginação e exibição de dados com Bootstrap  
+Criar relacionamentos muitos-para-muitos com tabela pivot  
+Registrar e controlar empréstimos com datas de retirada e devolução  
+Integrar formulários e ações personalizadas dentro de views existentes  
+Exibir históricos em diferentes perspectivas (por livro e por usuário)  
+Atualizar models para funcionamento correto de eager loading  
+Manter padronização RESTful junto a rotas específicas de ação  
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+### Requisitos
+
+- Autenticação configurada previamente   
