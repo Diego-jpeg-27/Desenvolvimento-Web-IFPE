@@ -1,59 +1,63 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Atividade 07.0 – Upload de Imagem para Capa do Livro
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Desenvolvimento Web 2 – IFPE Campus Igarassu (2025)**
 
-## About Laravel
+Esta atividade teve como objetivo integrar ao sistema de biblioteca a funcionalidade de **upload de imagem para capa dos livros**, permitindo adicionar, atualizar e remover imagens associadas a cada registro. A implementação envolve manipulação de arquivos utilizando o sistema de armazenamento do Laravel, garantindo que cada livro possa possuir uma capa personalizada.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Descrição
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+A atividade expande o CRUD da entidade **Book** desenvolvido nas etapas anteriores, adicionando suporte ao envio opcional de uma imagem de capa durante o cadastro e edição de livros.
 
-## Learning Laravel
+Foram definidos os seguintes comportamentos:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- O usuário pode fazer upload de uma imagem ao criar um livro.  
+- Caso nenhuma imagem seja enviada, o sistema deve exibir uma **capa padrão** ou deixar a área em branco.  
+- Na edição do livro, o usuário pode **substituir a imagem existente**, e a imagem anterior deve ser removida do storage.  
+- Ao deletar um livro, sua imagem também deve ser removida automaticamente do sistema de arquivos.  
+- As seeds do projeto podem precisar ser atualizadas para preencher o campo da imagem quando necessário.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+O desenvolvimento utiliza os recursos do Laravel Filesystem, conforme documentação oficial.
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Objetivos da Atividade
 
-### Premium Partners
+As ações realizadas nesta atividade foram:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- Adicionar campo de upload de imagem nas views de criação e edição de livros.  
+- Validar arquivos de imagem seguindo regras apropriadas (tipo, tamanho, extensão).  
+- Armazenar a imagem no diretório `storage/app/public/books`.  
+- Salvar no banco apenas o caminho da imagem.  
+- Exibir a capa do livro nas páginas de listagem, visualização e edição.  
+- Remover a imagem antiga ao atualizar a capa.  
+- Implementar a exclusão da imagem quando o livro é deletado.  
+- Ajustar seeds para considerar livros sem capa ou com capa padrão.  
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Aprendi a:
 
-## Code of Conduct
+Durante esta atividade, desenvolvi habilidades relevantes, como:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Manipular uploads de arquivos com o **Filesystem do Laravel**  
+Gerenciar imagens dentro do diretório `storage` e publicar arquivos com `storage:link`  
+Criar campos opcionais e tratar a ausência de imagem com fallback visual  
+Implementar lógica para remoção automática de arquivos  
+Atualizar registros de forma segura mantendo consistência entre banco e storage  
+Aplicar boas práticas no fluxo de edição envolvendo substituição de arquivos  
+Melhorar a experiência do usuário exibindo capas nos detalhes e listagens  
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Requisitos
 
-## License
+- Projeto Laravel funcional e configurado  
+- CRUD completo da entidade Book finalizado  
+- Diretório `storage` vinculado ao `public` via `php artisan storage:link`  
+- Bootstrap instalado para estilização  
+- Biblioteca GD ou ImageMagick instalada no servidor (dependendo da manipulação da imagem)  
+- Permissões adequadas para escrita no diretório de storage  
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
