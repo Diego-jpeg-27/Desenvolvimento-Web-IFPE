@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Publisher;
+use Illuminate\Http\Request;
+
+class PublisherController extends Controller
+{
+    public function index()
+    {
+        $publishers = Publisher::all();
+        return view('publishers.index', compact('publishers'));
+    }
+
+    public function create()
+    {
+        return view('publishers.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|unique:publishers|max:255',
+        ]);
+
+        Publisher::create($request->only('name'));
+
+        return redirect()->route('publishers.index')->with('success', 'Editora criada com sucesso.');
+    }
+
+    public function show(Publisher $publisher)
+    {
+        return view('publishers.show', compact('publisher'));
+    }
+
+    public function edit(Publisher $publisher)
+    {
+        return view('publishers.edit', compact('publisher'));
+    }
+
+    public function update(Request $request, Publisher $publisher)
+    {
+          // DEBUG TEMP: dd($request->all()); // Remova depois
+    
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'address' => 'nullable|string|max:500',  // ← CRÍTICO: permite null/vazio
+    ]);
+
+    $publisher->update($request->only(['name', 'address']));  // ← SEGURO: só estes campos
+
+    return redirect()->route('publishers.index')->with('success', 'Editora atualizada!');
+    }
+
+    public function destroy(Publisher $publisher)
+    {
+        $publisher->delete();
+
+        return redirect()->route('publishers.index')->with('success', 'Editora excluída com sucesso.');
+    }
+}
