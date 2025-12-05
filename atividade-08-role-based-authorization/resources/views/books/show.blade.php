@@ -1,3 +1,4 @@
+@extends('layouts.app')
 <!-- Formulário para Empréstimos -->
 <div class="card mb-4">
     <div class="card-header">Registrar Empréstimo</div>
