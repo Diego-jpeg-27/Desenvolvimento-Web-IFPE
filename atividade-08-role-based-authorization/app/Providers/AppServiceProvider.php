@@ -2,27 +2,23 @@
 
 namespace App\Providers;
 
-
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use App\Models\Book;          
-use App\Policies\BookPolicy;  
-
-class AuthServiceProvider extends ServiceProvider
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator; 
+class AppServiceProvider extends ServiceProvider
 {
     /**
-     * The model to policy mappings for the application.
-     *
-     * @var array<class-string, class-string>
+     * Register any application services.
      */
-    protected $policies = [
-        Book::class => BookPolicy::class, 
-    ];
+    public function register(): void
+    {
+        //
+    }
 
     /**
-     * Register any authentication / authorization services.
+     * Bootstrap any application services.
      */
     public function boot(): void
     {
-        //
+        Paginator::useBootstrapFive(); 
     }
 }

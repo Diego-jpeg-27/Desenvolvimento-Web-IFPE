@@ -7,16 +7,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-    <!-- Scripts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
@@ -32,14 +31,30 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                        
+                        {{-- Link Geral para Livros (Visível para todos os logados) --}}
+                        @auth
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('books.index') }}">Livros</a>
+                            </li>
+                        @endauth
+
+                        {{-- 
+                            MENU DE ADMINISTRAÇÃO 
+                            Apenas exibe se o usuário estiver logado E for Admin
+                        --}}
+                        @if(auth()->check() && auth()->user()->role === 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold text-danger" href="{{ route('users.index') }}">
+                                    <i class="bi bi-person-badge-fill"></i> Gerenciar Usuários
+                                </a>
+                            </li>
+                        @endif
 
                     </ul>
 
-                    <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
@@ -55,7 +70,12 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->name }} 
+                                    
+                                    {{-- Mostra o papel do usuário (badge) --}}
+                                    <span class="badge bg-secondary text-white" style="font-size: 0.7em;">
+                                        {{ ucfirst(Auth::user()->role) }}
+                                    </span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
