@@ -1,23 +1,39 @@
 <?php
 
-namespace Database\Factories;
+namespace App\Models;
 
-use App\Models\Borrowing;
-use App\Models\User;
-use App\Models\Book;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class BorrowingFactory extends Factory
+class Borrowing extends Model
 {
-    protected $model = Borrowing::class;
+    use HasFactory;
 
-    public function definition()
+    // Define os campos que podem ser preenchidos (Mass Assignment)
+    protected $fillable = [
+        'user_id',
+        'book_id',
+        'borrowed_at',
+        'returned_at',
+    ];
+
+    // Define que essas colunas devem ser tratadas como Datas (Carbon)
+    protected $casts = [
+        'borrowed_at' => 'datetime',
+        'returned_at' => 'datetime',
+    ];
+
+    // --- Relacionamentos ---
+
+    // Um empréstimo pertence a um Usuário
+    public function user()
     {
-        return [
-            'user_id' => User::factory(), // Cria um novo usuário ou usa um existente
-            'book_id' => Book::inRandomOrder()->first()->id, // Seleciona um livro aleatório
-            'borrowed_at' => $this->faker->dateTimeBetween('-1 month', 'now'), // Data de empréstimo
-            'returned_at' => $this->faker->optional()->dateTimeBetween('now', '+1 month'), // Data de devolução opcional
-        ];
+        return $this->belongsTo(User::class);
+    }
+
+    // Um empréstimo pertence a um Livro
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
     }
 }
