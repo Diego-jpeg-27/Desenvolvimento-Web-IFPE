@@ -2,6 +2,14 @@
 
 @section('content')
 <div class="container">
+   
+    {{-- Botão Voltar para a Lista de Livros --}}
+    <div class="mb-3">
+    <a href="{{ route('books.index') }}" class="btn btn-secondary btn-sm">
+    <i class="bi bi-arrow-left"></i> Voltar para a Lista de Livros
+    </a>
+    </div>
+    
     <div class="d-flex justify-content-between align-items-center my-4">
         <h1>Gerenciar Usuários</h1>
     </div>

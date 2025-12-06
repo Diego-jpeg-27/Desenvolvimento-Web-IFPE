@@ -65,4 +65,12 @@ class BookPolicy
     {
         return $user->isBibliotecario();
     }
+
+    /**
+    * Quem pode registrar empréstimos? Apenas Bibliotecários (Admin já foi liberado no before). Clientes retornarão false aqui.
+     */
+    public function borrow(User $user, Book $book): bool
+    {
+        return $user->isBibliotecario();
+    }
 }

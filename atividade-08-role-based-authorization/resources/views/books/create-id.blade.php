@@ -22,7 +22,7 @@
         <div class="mb-3">
             <label for="publisher_id" class="form-label">Editora</label>
             <select class="form-select @error('publisher_id') is-invalid @enderror"
-                    id="publisher_id" name="publisher_id" required>
+                     id="publisher_id" name="publisher_id" required>
                 <option value="" selected disabled>Selecione uma editora</option>
                 @foreach($publishers as $publisher)
                     <option value="{{ $publisher->id }}">{{ $publisher->name }}</option>
@@ -37,7 +37,7 @@
         <div class="mb-3">
             <label for="author_id" class="form-label">Autor</label>
             <select class="form-select @error('author_id') is-invalid @enderror"
-                    id="author_id" name="author_id" required>
+                     id="author_id" name="author_id" required>
                 <option value="" selected disabled>Selecione um autor</option>
                 @foreach($authors as $author)
                     <option value="{{ $author->id }}">{{ $author->name }}</option>
@@ -52,7 +52,7 @@
         <div class="mb-3">
             <label for="category_id" class="form-label">Categoria</label>
             <select class="form-select @error('category_id') is-invalid @enderror"
-                    id="category_id" name="category_id" required>
+                     id="category_id" name="category_id" required>
                 <option value="" selected disabled>Selecione uma categoria</option>
                 @foreach($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -69,7 +69,14 @@
             <input type="file" class="form-control" name="cover_image" id="cover_image" accept="image/*">
         </div>
 
-        <button type="submit" class="btn btn-success">Salvar</button>
+        {{-- BOTÕES SALVAR E CANCELAR --}}
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-success">Salvar</button>
+
+            <a href="{{ route('books.index') }}" class="btn btn-secondary">
+                Cancelar
+            </a>
+        </div>
     </form>
 </div>
 @endsection

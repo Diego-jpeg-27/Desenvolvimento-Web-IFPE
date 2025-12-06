@@ -45,26 +45,25 @@ class BookController extends Controller
     {
         $this->authorize('update', $book);
 
-        $request->validate([
+        $validatedData = $request->validate([
             'title'        => 'required|string|max:255',
             'publisher_id' => 'required|exists:publishers,id',
             'author_id'    => 'required|exists:authors,id',
             'category_id'  => 'required|exists:categories,id',
             'cover_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
-
+        
         if ($request->hasFile('cover_image')) {
+            // Remove capa antiga antes de salvar a nova
             if ($book->cover_image && Storage::disk('public')->exists($book->cover_image)) {
                 Storage::disk('public')->delete($book->cover_image);
             }
-            $book->cover_image = $request->file('cover_image')->store('covers', 'public');
+            // Salva o caminho do arquivo no array validado
+            $validatedData['cover_image'] = $request->file('cover_image')->store('covers', 'public');
         }
 
-        $book->title        = $request->title;
-        $book->publisher_id = $request->publisher_id;
-        $book->author_id    = $request->author_id;
-        $book->category_id  = $request->category_id;
-        $book->save();
+        // Requer que 'cover_image' e outros campos estejam no $fillable do Model Book.
+        $book->update($validatedData);
 
         return redirect()->route('books.index')->with('success', 'Livro atualizado com sucesso.');
     }
@@ -84,7 +83,7 @@ class BookController extends Controller
     {
         $this->authorize('create', Book::class);
 
-        $request->validate([
+        $validatedData = $request->validate([
             'title'        => 'required|string|max:255',
             'pages'        => 'required|integer|min:1',
             'publisher_id' => 'required|exists:publishers,id',
@@ -93,13 +92,12 @@ class BookController extends Controller
             'cover_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        $data = $request->only('title','pages','publisher_id','author_id','category_id');
-
         if ($request->hasFile('cover_image')) {
-            $data['cover_image'] = $request->file('cover_image')->store('covers', 'public');
+            $validatedData['cover_image'] = $request->file('cover_image')->store('covers', 'public');
         }
-
-        Book::create($data);
+        
+        // array completo $validatedData, que contém 'cover_image' se houver.
+        Book::create($validatedData);
 
         return redirect()->route('books.index')->with('success', 'Livro criado com sucesso.');
     }
@@ -119,7 +117,7 @@ class BookController extends Controller
     {
         $this->authorize('create', Book::class);
 
-        $request->validate([
+        $validatedData = $request->validate([
             'title'        => 'required|string|max:255',
             'pages'        => 'required|integer|min:1',
             'publisher_id' => 'required|exists:publishers,id',
@@ -128,13 +126,11 @@ class BookController extends Controller
             'cover_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        $data = $request->only('title','pages','publisher_id','author_id','category_id');
-
         if ($request->hasFile('cover_image')) {
-            $data['cover_image'] = $request->file('cover_image')->store('covers', 'public');
+            $validatedData['cover_image'] = $request->file('cover_image')->store('covers', 'public');
         }
-
-        Book::create($data);
+        
+        Book::create($validatedData);
 
         return redirect()->route('books.index')->with('success', 'Livro criado com sucesso.');
     }

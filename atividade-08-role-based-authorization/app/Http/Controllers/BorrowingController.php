@@ -10,31 +10,39 @@ use App\Models\Borrowing;
 class BorrowingController extends Controller
 {
     public function store(Request $request, Book $book)
-{
-    $request->validate([
-        'user_id' => 'required|exists:users,id',
-    ]);
+    {
+        // Verifica se o usuário tem permissão para emprestar
+        // Isso bloqueia Clientes e permite apenas Admin/Bibliotecário
+        $this->authorize('borrow', $book);
 
-    Borrowing::create([
-        'user_id' => $request->user_id,
-        'book_id' => $book->id,
-        'borrowed_at' => now(),
-    ]);
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+        ]);
 
-    return redirect()->route('books.show', $book)->with('success', 'Empréstimo registrado com sucesso.');
- }
+        Borrowing::create([
+            'user_id' => $request->user_id,
+            'book_id' => $book->id,
+            'borrowed_at' => now(),
+        ]);
+
+        return redirect()->route('books.show', $book)->with('success', 'Empréstimo registrado com sucesso.');
+    }
+
     public function returnBook(Borrowing $borrowing)
- {
-    $borrowing->update([
-        'returned_at' => now(),
-    ]);
+    {
+        $this->authorize('borrow', $borrowing->book);
 
-    return redirect()->route('books.show', $borrowing->book_id)->with('success', 'Devolução registrada com sucesso.');
- }
+        $borrowing->update([
+            'returned_at' => now(),
+        ]);
+
+        return redirect()->route('books.show', $borrowing->book_id)->with('success', 'Devolução registrada com sucesso.');
+    }
+
     public function userBorrowings(User $user)
- {
-    $borrowings = $user->books()->withPivot('borrowed_at', 'returned_at')->get();
+    {
+        $borrowings = $user->books()->withPivot('borrowed_at', 'returned_at')->get();
 
-    return view('users.borrowings', compact('user', 'borrowings'));
- }
+        return view('users.borrowings', compact('user', 'borrowings'));
+    }
 }

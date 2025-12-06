@@ -31,26 +31,28 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    
                     <ul class="navbar-nav me-auto">
                         
-                        {{-- Link Geral para Livros (Visível para todos os logados) --}}
+                        {{-- LINKS GERAIS DE NAVEGAÇÃO --}}
                         @auth
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('books.index') }}">Livros</a>
                             </li>
+                            
+                            {{-- APENAS ADMIN E BIBLIOTECÁRIO VEEM ESTES LINKS --}}
+                            @if(Auth::check() && (Auth::user()->role === 'admin' || Auth::user()->role === 'bibliotecario'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('authors.index') }}">Autores</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('categories.index') }}">Categorias</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('publishers.index') }}">Editoras</a>
+                                </li>
+                            @endif
                         @endauth
-
-                        {{-- 
-                            MENU DE ADMINISTRAÇÃO 
-                            Apenas exibe se o usuário estiver logado E for Admin
-                        --}}
-                        @if(auth()->check() && auth()->user()->role === 'admin')
-                            <li class="nav-item">
-                                <a class="nav-link fw-bold text-danger" href="{{ route('users.index') }}">
-                                    <i class="bi bi-person-badge-fill"></i> Gerenciar Usuários
-                                </a>
-                            </li>
-                        @endif
 
                     </ul>
 
@@ -68,6 +70,16 @@
                                 </li>
                             @endif
                         @else
+                            
+                            {{-- LINK FIXO PARA ADMIN (Abaixo do dropdown do usuário) --}}
+                            @if(auth()->user()->role === 'admin')
+                                <li class="nav-item me-2"> 
+                                    <a class="nav-link fw-bold text-danger" href="{{ route('users.index') }}">
+                                        <i class="bi bi-person-badge-fill me-1"></i> Gerenciar Usuários
+                                    </a>
+                                </li>
+                            @endif
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} 
@@ -79,6 +91,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -100,5 +113,7 @@
             @yield('content')
         </main>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
