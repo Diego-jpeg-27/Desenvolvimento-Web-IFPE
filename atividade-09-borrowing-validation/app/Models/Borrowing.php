@@ -1,9 +1,12 @@
 <?php
 
+
 namespace App\Models;
+
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 
 class Borrowing extends Model
 {
@@ -17,19 +20,18 @@ class Borrowing extends Model
         'returned_at',
     ];
 
-    // Define que essas colunas devem ser tratadas como Datas (Carbon)
+    // Define que essas colunas devem ser tratadas como Datas 
     protected $casts = [
         'borrowed_at' => 'datetime',
         'returned_at' => 'datetime',
     ];
-
-    // --- Relacionamentos ---
 
     // Um empréstimo pertence a um Usuário
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
 
     // Um empréstimo pertence a um Livro
     public function book()
