@@ -1,12 +1,11 @@
 <?php
 
-
 namespace App\Policies;
-
 
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+
 class BookPolicy
 {
     /**
@@ -15,11 +14,15 @@ class BookPolicy
      */
     public function before(User $user, string $ability): bool|null
     {
+        // Se o método isAdmin() estiver funcionando, isso libera o Admin.
+        // Mas vamos garantir também nas regras individuais abaixo.
         if ($user->isAdmin()) {
             return true;
         }
+
         return null; // Se não for admin, continua para as regras abaixo
     }
+
     /**
      * Quem pode ver a lista de livros?
      * Todos os usuários logados.
@@ -28,6 +31,7 @@ class BookPolicy
     {
         return true;
     }
+
     /**
      * Quem pode ver um livro específico?
      * Todos os usuários logados.
@@ -36,6 +40,7 @@ class BookPolicy
     {
         return true;
     }
+
     /**
      * Quem pode criar livros?
      * Apenas Bibliotecários (Admin já foi liberado no before).
@@ -44,6 +49,7 @@ class BookPolicy
     {
         return $user->isBibliotecario();
     }
+
     /**
      * Quem pode atualizar livros?
      * Apenas Bibliotecários.
@@ -52,6 +58,7 @@ class BookPolicy
     {
         return $user->isBibliotecario();
     }
+
     /**
      * Quem pode deletar livros?
      * Apenas Bibliotecários.
@@ -59,5 +66,16 @@ class BookPolicy
     public function delete(User $user, Book $book): bool
     {
         return $user->isBibliotecario();
+    }
+
+    /**
+     * Quem pode registrar empréstimos ?
+     * Admin OU Bibliotecário.
+     * Adicionamos a verificação explícita do 'admin' aqui para garantir
+     * caso o método 'before' falhe.
+     */
+    public function borrow(User $user, Book $book): bool
+    {
+        return $user->role === 'admin' || $user->role === 'bibliotecario';
     }
 }
