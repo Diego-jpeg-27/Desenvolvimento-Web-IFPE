@@ -13,7 +13,7 @@
             {{ session('success') }}
         </div>
     @endif
-
+    
     <table class="table table-striped">
         <thead>
             <tr>
