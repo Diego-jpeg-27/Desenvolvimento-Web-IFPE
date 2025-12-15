@@ -5,6 +5,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\UserController;
+
+Route::resource('users', UserController::class)->except(['create', 'store', 'destroy']);
 
 // Rotas para criação de livros
 Route::get('/books/create-id-number', [BookController::class, 'createWithId'])->name('books.create.id');
