@@ -11,23 +11,29 @@ class BorrowingController extends Controller
 {
     public function store(Request $request, Book $book)
     {
-        // SEGURANÇA (ACL): Verifica se o usuário pode emprestar (Admin/Bibliotecário)
+        // SEGURANÇA (ACL)
         $this->authorize('borrow', $book);
 
-        // VALIDAÇÃO DE DUPLICIDADE 
-
-        // Usa o método do Model para verificar se já existe empréstimo ativo
+        // VALIDAÇÃO DE DUPLICIDADE (Livro já emprestado?)
         if (Borrowing::activeLoanForBook($book->id)) {
-            // Se já estiver emprestado, impede a criação e volta com erro
             return redirect()->back()->with('error', 'Este livro já possui um empréstimo ativo e não pode ser emprestado novamente.');
         }
 
-        // Validação dos dados
+        // VALIDAÇÃO DOS DADOS
         $request->validate([
             'user_id' => 'required|exists:users,id',
         ]);
 
-        // Criação do Empréstimo
+        
+        // Buscamos o usuário selecionado
+        $user = User::find($request->user_id);
+
+        // Verificamos se ele já atingiu o limite
+        if ($user->hasReachedLoanLimit()) {
+            return redirect()->back()->with('error', "O usuário {$user->name} já atingiu o limite máximo de 5 empréstimos simultâneos.");
+        }
+
+        // CRIAÇÃO DO EMPRÉSTIMO
         Borrowing::create([
             'user_id' => $request->user_id,
             'book_id' => $book->id,
@@ -39,7 +45,6 @@ class BorrowingController extends Controller
 
     public function returnBook(Borrowing $borrowing)
     {
-        // SEGURANÇA: Verifica permissão antes de devolver
         $this->authorize('borrow', $borrowing->book);
 
         $borrowing->update([
@@ -56,8 +61,6 @@ class BorrowingController extends Controller
         return view('users.borrowings', compact('user', 'borrowings'));
     }
 
-    // Geralmente o método 'show' do livro fica no BookController, 
-    // mas mantive aqui conforme o seu código enviado.
     public function show(Book $book)
     {
         $book->load(['author', 'publisher', 'category']);
