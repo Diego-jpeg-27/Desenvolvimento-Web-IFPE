@@ -9,8 +9,9 @@ class Book extends Model
  {
     use HasFactory;
 
-    protected $fillable = ['title', 'author_id', 'category_id', 'publisher_id', 'published_year'];
+    protected $fillable = ['title', 'author_id', 'category_id', 'publisher_id', 'published_year','cover_image'];
 
+    // carregar os usuários associados com as informações do pivot
    public function users()
 {
     return $this->belongsToMany(User::class, 'borrowings')
