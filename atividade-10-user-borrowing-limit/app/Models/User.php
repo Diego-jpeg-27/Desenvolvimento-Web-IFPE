@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role', // Adicionado para permitir atribuição em massa
     ];
 
     /**
@@ -45,10 +46,45 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
     public function books()
-   {
-    return $this->belongsToMany(Book::class, 'borrowings')
-                ->withPivot('id', 'borrowed_at', 'returned_at')
-                ->withTimestamps();
- }
+    {
+        return $this->belongsToMany(Book::class, 'borrowings')
+                    ->withPivot('id', 'borrowed_at', 'returned_at')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Verifica se o usuário é Administrador
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Verifica se o usuário é Bibliotecário
+     */
+    public function isBibliotecario(): bool
+    {
+        return $this->role === 'bibliotecario';
+    }
+
+    /**
+     * Verifica se o usuário é Cliente
+     */
+    public function isCliente(): bool
+    {
+        return $this->role === 'cliente';
+    }
+
+    /**
+     * Verifica se o usuário possui um papel específico
+     * @param string $role
+     * @return bool
+     */
+    public function hasRole(string $role): bool
+    {
+        return $this->role === $role;
+    }
 }

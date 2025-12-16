@@ -1,33 +1,70 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
 
 class UserController extends Controller
 {
+    /**
+     * Lista todos os usuários (Apenas para Admin)
+     */
     public function index()
     {
-        $users = \App\Models\User::paginate(10); // Paginação para 10 usuários por página
+        // Segurança: Bloqueia quem não é admin
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'ACESSO NEGADO: Apenas administradores podem gerenciar usuários.');
+        }
+
+
+        // Paginação
+        $users = User::orderBy('id', 'desc')->paginate(10);
+       
         return view('users.index', compact('users'));
     }
 
-    public function show(\App\Models\User $user)
-    {
-        return view('users.show', compact('user'));
-    }
 
-    public function edit(\App\Models\User $user)
+    /**
+     * Exibe o formulário de edição (Focado no Papel do usuário)
+     */
+    public function edit(User $user)
     {
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'ACESSO NEGADO.');
+        }
+
+
         return view('users.edit', compact('user'));
     }
 
-    public function update(Request $request, \App\Models\User $user)
+
+    /**
+     * Atualiza o papel do usuário no banco
+     */
+    public function update(Request $request, User $user)
     {
-        $user->update($request->only('name', 'email'));
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'ACESSO NEGADO.');
+        }
 
-        return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso.');
+
+        // Validação: Garante que o role enviado é válido
+        $validated = $request->validate([
+            'role' => ['required', Rule::in(['admin', 'bibliotecario', 'cliente'])],
+        ]);
+
+
+        // Atualiza apenas o role 
+        // permitir editar nome/email também, adicione-os na validação acima
+        $user->update($validated);
+
+
+        return redirect()->route('users.index')
+            ->with('success', 'Permissões do usuário atualizadas com sucesso.');
     }
-
 }
