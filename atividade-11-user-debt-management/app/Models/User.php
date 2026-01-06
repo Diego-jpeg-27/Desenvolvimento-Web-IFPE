@@ -11,7 +11,12 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-
+    public function books()
+    {
+        return $this->belongsToMany(Book::class, 'borrowings')
+            ->withPivot('id', 'borrowed_at', 'returned_at')
+            ->withTimestamps();
+    }
     /**
      * The attributes that are mass assignable.
      *
@@ -45,4 +50,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
 }

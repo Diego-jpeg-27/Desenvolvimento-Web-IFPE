@@ -1,17 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
 use App\Models\Book;
 use App\Models\Publisher;
 use App\Models\Author;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Models\User;
+
+
 class BookController extends Controller
 {
-
-
     // Formulário com input de ID
     public function createWithId()
     {
@@ -86,9 +85,12 @@ class BookController extends Controller
         // Carregando autor, editora e categoria do livro com eager loading
         $book->load(['author', 'publisher', 'category']);
 
-        return view('books.show', compact('book'));
+        // Carregar todos os usuários para o formulário de empréstimo
+        $users = User::all();
 
+        return view('books.show', compact('book', 'users'));
     }
+
     public function index()
     {
         // Carregar os livros com autores usando eager loading e paginação
