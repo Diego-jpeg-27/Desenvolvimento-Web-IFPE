@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->foreignId('publisher_id')->constrained()->onDelete('cascade');
 
             $table->integer('published_year')->nullable();
-
+            $table->string('cover_image')->nullable();
             $table->timestamps();
         });
     }

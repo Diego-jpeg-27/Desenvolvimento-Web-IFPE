@@ -53,6 +53,11 @@
                     </div>
                 @enderror
             </div>
+            
+            <div class="mb-3">
+                <label for="cover_image" class="form-label">Capa do Livro </label>
+                <input type="file" class="form-control" name="cover_image" id="cover_image" accept="image/*">
+            </div>
 
 
             <button type="submit" class="btn btn-success">Salvar</button>
