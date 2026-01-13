@@ -22,21 +22,31 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            <a href="{{ route('users.show', $user) }}" class="btn btn-info btn-sm">
-                                <i class="bi bi-eye"></i> Visualizar
-                            </a>
-                            <a href="{{ route('users.edit', $user) }}" class="btn btn-primary btn-sm">
-                                <i class="bi bi-pencil"></i> Editar
-                            </a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
-
-        <div class="d-flex justify-content-center">
-            {{ $users->links() }}
+                                   {{-- Lógica visual para destacar os papéis --}}
+                                @if($user->role === 'admin')
+                                    <span class="badge bg-danger">Admin</span>
+                                @elseif($user->role === 'bibliotecario')
+                                    <span class="badge bg-warning text-dark">Bibliotecário</span>
+                                @else
+                                    <span class="badge bg-success">Cliente</span>
+                                @endif
+                            </td>
+                            <td>
+                                {{-- Botão de Visualizar REMOVIDO para corrigir o erro --}}
+                               
+                                <a href="{{ route('users.edit', $user) }}" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-pencil-square"></i> Editar Papel
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
+    </div>
+
+     <div class="d-flex justify-content-center mt-3">
+        {{ $users->links() }}
+     </div>
     </div>
 @endsection

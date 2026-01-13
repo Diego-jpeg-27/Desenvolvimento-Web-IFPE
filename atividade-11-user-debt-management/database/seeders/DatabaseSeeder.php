@@ -5,7 +5,6 @@ use Illuminate\Database\Seeder;
 use Faker\Factory as FakerFactory;
 class DatabaseSeeder extends Seeder
 {
-    
     public function run()
     {
         FakerFactory::create()->unique(true);
@@ -13,6 +12,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             AuthorPublisherBookSeeder::class,
             UserBorrowingSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
