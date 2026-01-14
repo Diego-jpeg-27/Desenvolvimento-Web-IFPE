@@ -60,29 +60,24 @@ class BookController extends Controller
             }
 
 
-            // salvar nova capa
-            $path = $request->file('cover_image')->store('covers', 'public');
-            $book->cover_image = $path;
+              // Salva o caminho do arquivo no array validado
+            $validatedData['cover_image'] = $request->file('cover_image')->store('covers', 'public');
         }
 
 
-        // outros campos
-        $book->title = $request->title;
-        $book->publisher_id = $request->publisher_id;
-        $book->author_id = $request->author_id;
-        $book->category_id = $request->category_id;
-
-
-        $book->save();
+        // Requer que 'cover_image' e outros campos estejam no $fillable do Model Book.
+        $book->update($validatedData);
 
 
         return redirect()->route('books.index')->with('success', 'Livro atualizado com sucesso.');
     }
 
 
-    // FORM ID
     public function createWithId()
     {
+        $this->authorize('create', Book::class);
+
+
         $publishers = Publisher::all();
         $authors = Author::all();
         $categories = Category::all();
@@ -94,76 +89,76 @@ class BookController extends Controller
 
     public function storeWithId(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'pages' => 'required|integer|min:1',
+        $this->authorize('create', Book::class);
+
+
+        $validatedData = $request->validate([
+            'title'        => 'required|string|max:255',
+            'pages'        => 'required|integer|min:1',
             'publisher_id' => 'required|exists:publishers,id',
-            'author_id' => 'required|exists:authors,id',
-            'category_id' => 'required|exists:categories,id',
-            'cover_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'author_id'    => 'required|exists:authors,id',
+            'category_id'  => 'required|exists:categories,id',
+            'cover_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
 
-        $data = $request->only('title', 'pages', 'publisher_id', 'author_id', 'category_id');
-
-
-        // Upload de capa
         if ($request->hasFile('cover_image')) {
-            $data['cover_image'] = $request->file('cover_image')->store('covers', 'public');
+            $validatedData['cover_image'] = $request->file('cover_image')->store('covers', 'public');
         }
-
-
-        Book::create($data);
+       
+        // array completo $validatedData, que contém 'cover_image' se houver.
+        Book::create($validatedData);
 
 
         return redirect()->route('books.index')->with('success', 'Livro criado com sucesso.');
     }
 
 
-    // FORM SELECT
     public function createWithSelect()
     {
+        $this->authorize('create', Book::class);
+
+
         $publishers = Publisher::all();
         $authors = Author::all();
         $categories = Category::all();
 
 
-        return view('books.create-select', compact('publishers', 'authors', 'categories'));
+        return view('books.create-select', compact('publishers','authors','categories'));
     }
 
 
     public function storeWithSelect(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'pages' => 'required|integer|min:1',
+        $this->authorize('create', Book::class);
+
+
+        $validatedData = $request->validate([
+            'title'        => 'required|string|max:255',
+            'pages'        => 'required|integer|min:1',
             'publisher_id' => 'required|exists:publishers,id',
-            'author_id' => 'required|exists:authors,id',
-            'category_id' => 'required|exists:categories,id',
-            'cover_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'author_id'    => 'required|exists:authors,id',
+            'category_id'  => 'required|exists:categories,id',
+            'cover_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
 
-        $data = $request->only('title', 'pages', 'publisher_id', 'author_id', 'category_id');
-
-
-        // Upload da capa
         if ($request->hasFile('cover_image')) {
-            $data['cover_image'] = $request->file('cover_image')->store('covers', 'public');
+            $validatedData['cover_image'] = $request->file('cover_image')->store('covers', 'public');
         }
-
-
-        Book::create($data);
+       
+        Book::create($validatedData);
 
 
         return redirect()->route('books.index')->with('success', 'Livro criado com sucesso.');
     }
 
 
-    //  REMOVER CAPA AO DELETAR LIVRO
     public function destroy(Book $book)
     {
-        // remover arquivo de capa
+        $this->authorize('delete', $book);
+
+
         if ($book->cover_image && Storage::disk('public')->exists($book->cover_image)) {
             Storage::disk('public')->delete($book->cover_image);
         }
