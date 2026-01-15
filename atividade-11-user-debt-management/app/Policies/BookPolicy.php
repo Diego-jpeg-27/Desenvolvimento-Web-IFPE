@@ -57,4 +57,14 @@ class BookPolicy
     {
         return $user->isBibliotecario();
     }
+    /**
+     * Quem pode registrar empréstimos ?
+     * Admin OU Bibliotecário.
+     * Adicionamos a verificação explícita do 'admin' aqui para garantir
+     * caso o método 'before' falhe.
+     */
+    public function borrow(User $user, Book $book): bool
+    {
+        return $user->role === 'admin' || $user->role === 'bibliotecario';
+    }
 }
