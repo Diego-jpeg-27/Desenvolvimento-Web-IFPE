@@ -52,11 +52,10 @@ Route::middleware(['auth'])->group(
 
 
         // --- ADMINISTRAÇÃO DE USUÁRIOS ---
-        // (Substitui o antigo Route::resource('users'))
-        // Estas rotas usam o UserController protegido que criamos
         Route::get('/admin/users', [UserController::class, 'index'])->name('users.index');
         Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
         Route::put('/admin/users/{user}', [UserController::class, 'update'])->name('users.update');
 
+        Route::get('/books/create', [BookController::class, 'createWithSelect'])->name('books.create');
     }
 );
