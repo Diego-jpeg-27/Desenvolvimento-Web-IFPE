@@ -21,11 +21,19 @@ class BorrowingController extends Controller
             return redirect()->back()->with('error', 'Este livro já possui um empréstimo ativo e não pode ser emprestado novamente.');
         }
 
-        // Validação dos dados
+        // VALIDAÇÃO DOS DADOS
         $request->validate([
             'user_id' => 'required|exists:users,id',
         ]);
-        // Criação do Empréstimo
+        // BUSCA O USUARIO SELECIONADO
+        $user = User::find($request->user_id);
+        
+        // VERIFICA SE O LIMITE FOI ATINGIDO
+        if ($user->hasReachedLoanLimit()) {
+            return redirect()->back()->with('error', "O usuário {$user->name} já atingiu o limite máximo de 5 empréstimos simultâneos.");
+        }
+
+         // CRIAÇÃO DO EMPRÉSTIMO
         Borrowing::create([
             'user_id' => $request->user_id,
             'book_id' => $book->id,
@@ -53,8 +61,6 @@ class BorrowingController extends Controller
         return view('users.borrowings', compact('user', 'borrowings'));
     }
 
-    // Nota: Geralmente o método 'show' do livro fica no BookController,
-    // mas mantive aqui conforme o seu código enviado.
     public function show(Book $book)
     {
         $book->load(['author', 'publisher', 'category']);

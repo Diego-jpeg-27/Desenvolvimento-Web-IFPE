@@ -1,20 +1,15 @@
 <?php
 
-
 namespace App\Models;
 
-
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-
 
     /**
      * The attributes that are mass assignable.
@@ -28,7 +23,6 @@ class User extends Authenticatable
         'role', // Adicionado para permitir atribuição em massa
     ];
 
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -38,7 +32,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
 
     /**
      * Get the attributes that should be cast.
@@ -53,14 +46,12 @@ class User extends Authenticatable
         ];
     }
 
-
     public function books()
     {
         return $this->belongsToMany(Book::class, 'borrowings')
             ->withPivot('id', 'borrowed_at', 'returned_at')
             ->withTimestamps();
     }
-
 
     /**
      * Verifica se o usuário é Administrador
@@ -70,7 +61,6 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
-
     /**
      * Verifica se o usuário é Bibliotecário
      */
@@ -78,7 +68,6 @@ class User extends Authenticatable
     {
         return $this->role === 'bibliotecario';
     }
-
 
     /**
      * Verifica se o usuário é Cliente
@@ -88,7 +77,6 @@ class User extends Authenticatable
         return $this->role === 'cliente';
     }
 
-
     /**
      * Verifica se o usuário possui um papel específico
      * @param string $role
@@ -97,5 +85,22 @@ class User extends Authenticatable
     public function hasRole(string $role): bool
     {
         return $this->role === $role;
+    }
+
+    /**
+     * Conta quantos empréstimos ativos (não devolvidos) o usuário tem.
+     */
+    public function activeLoansCount(): int
+    {
+        // Filtra a relação 'books' onde o campo pivot 'returned_at' é nulo
+        return $this->books()->wherePivot('returned_at', null)->count();
+    }
+
+    /**
+     * Verifica se o usuário atingiu o limite de empréstimos = Max: 5
+     */
+    public function hasReachedLoanLimit(): bool
+    {
+        return $this->activeLoansCount() >= 5;
     }
 }
