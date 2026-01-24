@@ -1,10 +1,8 @@
 @extends('layouts.app')
 
-
 @section('content')
 <div class="container">
     <h1 class="my-4">Editar Permissões do Usuário</h1>
-
 
     {{-- Exibe erros de validação caso ocorram --}}
     @if ($errors->any())
@@ -17,11 +15,9 @@
         </div>
     @endif
 
-
     <form action="{{ route('users.update', $user) }}" method="POST">
         @csrf
         @method('PUT')
-
 
         {{-- Nome (Bloqueado para edição, apenas visualização) --}}
         <div class="mb-3">
@@ -29,13 +25,11 @@
             <input type="text" class="form-control bg-light" id="name" value="{{ $user->name }}" disabled>
         </div>
 
-
         {{-- Email (Bloqueado para edição) --}}
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control bg-light" id="email" value="{{ $user->email }}" disabled>
         </div>
-
 
         {{-- SELETOR DE PAPEL (Obrigatório para a funcionalidade) --}}
         <div class="mb-4">
@@ -55,7 +49,6 @@
                 Selecione o nível de acesso que este usuário terá no sistema.
             </div>
         </div>
-
 
         <div class="d-flex gap-2">
             <button type="submit" class="btn btn-success">

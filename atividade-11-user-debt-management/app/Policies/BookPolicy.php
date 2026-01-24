@@ -12,9 +12,12 @@ class BookPolicy
      */
     public function before(User $user, string $ability): bool|null
     {
+        // Se o método isAdmin() estiver funcionando, isso libera o Admin.
+        // Mas vamos garantir também nas regras individuais abaixo.
         if ($user->isAdmin()) {
             return true;
         }
+
         return null; // Se não for admin, continua para as regras abaixo
     }
     /**

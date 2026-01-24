@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 class UserFactory extends Factory
 {
     /**
-     * The current password being used by the factory.
+     * O "password" atual sendo usado pelo hash padrão.
      */
     protected static ?string $password;
 
@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            'role' => 'cliente',
+            'role' => 'cliente', // Padrão seguro: cria como cliente
         ];
     }
 
@@ -38,7 +38,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
@@ -46,10 +46,9 @@ class UserFactory extends Factory
     /**
      * Estado para criar um Administrador
      */
-
     public function admin(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'role' => 'admin',
         ]);
     }
@@ -60,7 +59,7 @@ class UserFactory extends Factory
      */
     public function bibliotecario(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'role' => 'bibliotecario',
         ]);
     }
