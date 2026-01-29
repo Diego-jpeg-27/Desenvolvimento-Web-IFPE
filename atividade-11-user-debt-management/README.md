@@ -1,59 +1,45 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Atividade 11 – Implementação de Sistema de Multas por Atraso
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Desenvolvimento Web 2 – IFPE Campus Igarassu (2026)**
 
-## About Laravel
+Esta atividade teve como objetivo integrar ao sistema de biblioteca regras financeiras para o controle de multas por atraso na devolução de livros. A implementação abrange desde o cálculo automático de débitos baseado em datas até o bloqueio preventivo de novos empréstimos para usuários inadimplentes, garantindo a integridade das regras de negócio do sistema.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Descrição
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Essa atividade introduz o conceito de gestão de débitos ao fluxo de empréstimos, adicionando uma camada de inteligência financeira ao relacionamento entre a entidade User e Borrowing.
 
-## Learning Laravel
+Foram definidos os seguintes comportamentos:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
++ Prazo e Carência: Os livros devem ser devolvidos em até 15 dias após a data de empréstimo.
++ Cálculo Automático: Em caso de atraso, o sistema calcula uma multa de R$ 0,50 por dia excedente no momento da devolução.
++ Gestão de Débitos: O valor calculado é somado ao campo debit do usuário, permitindo o acúmulo de multas de diferentes empréstimos.
++ Trava de Segurança: Usuários com qualquer valor de débito pendente são impedidos pelo sistema de realizar novos empréstimos.
++ Quitação Manual: O pagamento é realizado diretamente ao bibliotecário, que possui uma interface exclusiva para zerar o débito no sistema.
++ O desenvolvimento utilizou a biblioteca Carbon para manipulação precisa de datas e o sistema de Migrations do Laravel para evolução do banco de dados.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## Objetivos da Atividade
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+As ações realizadas nesta atividade foram:
 
-### Premium Partners
++ Adicionar a coluna debit (tipo decimal) à tabela users via migration.
++ Configurar o fuso horário da aplicação para America/Sao_Paulo para garantir precisão nos registros de data e hora.
++ Implementar lógica no BorrowingController para calcular a diferença de dias entre o empréstimo e a devolução.
++ Utilizar intval() para tratar e sanitizar os dados de dias de atraso provenientes do Carbon.
++ Criar validação no fluxo de store de empréstimos para verificar a existência de débitos ativos.
++ Desenvolver interface na listagem de usuários para exibição clara de valores monetários formatados.
++ Implementar rota e método settleDebit para permitir a limpeza do débito pelo administrador/bibliotecário.
++ Validar todo o motor de cálculo e bloqueio utilizando o Laravel Tinker com simulações retroativas.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Aprendi a:
++ Implementar Lógica de Negócios Complexa: Desenvolvimento de regras para cálculos automáticos de multas e carência.
++ Manipular Datas com Carbon: Gestão de períodos de tempo e ajuste de fusos horários (Timezone) para garantir a precisão dos registros.
++ Criar Travas de Segurança (ACL): Implementação de "pedágios" lógicos para bloquear operações de usuários inadimplentes.
++ Tratar Dados Numéricos: Uso de funções de conversão (intval) e formatação monetária (number_format) para o padrão brasileiro.
++ Gerenciar Rotas de Atualização: Criação de fluxos de quitação financeira utilizando o método PATCH e ações de atualização direta no banco de dados.
++ Utilizar o Laravel Tinker: Simulação de cenários críticos e depuração avançada de dados via linha de comando.
