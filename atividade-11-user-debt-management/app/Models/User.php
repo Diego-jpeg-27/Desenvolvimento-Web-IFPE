@@ -17,12 +17,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role', // Adicionado para permitir atribuição em massa
-    ];
-
+        'name','email', 'password', 'role', 'debit'  ];
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -102,5 +97,13 @@ class User extends Authenticatable
     public function hasReachedLoanLimit(): bool
     {
         return $this->activeLoansCount() >= 5;
+    }
+    /**
+     * Verifica se o usuário possui débitos pendentes.
+     */
+    public function hasDebits(): bool
+    {
+        // Se $this->debit for maior que 0, retorne true.
+        return $this->debit > 0;
     }
 }
