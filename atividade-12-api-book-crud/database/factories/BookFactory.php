@@ -20,7 +20,7 @@ class BookFactory extends Factory
             'author_id' => Author::factory(),
             'category_id' => Category::factory(),
             'publisher_id' => Publisher::factory(),
-           
+            'published_year' => $this->faker->year,
         ];
     }
 }
