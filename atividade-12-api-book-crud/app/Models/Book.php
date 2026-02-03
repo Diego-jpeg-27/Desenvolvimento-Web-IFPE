@@ -11,6 +11,13 @@ class Book extends Model
 
     protected $fillable = ['title', 'author_id', 'category_id', 'publisher_id', 'published_year'];
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'borrowings')
+            ->withPivot('id', 'borrowed_at', 'returned_at')
+            ->withTimestamps();
+    }
+
     public function author()
     {
         return $this->belongsTo(Author::class);
@@ -25,5 +32,4 @@ class Book extends Model
     {
         return $this->belongsTo(Publisher::class);
     }
-
 }
