@@ -17,13 +17,11 @@ class Borrowing extends Model
         'returned_at',
     ];
 
-    // Define que essas colunas devem ser tratadas como Datas (Carbon)
+    // Define que essas colunas devem ser tratadas como Datas 
     protected $casts = [
         'borrowed_at' => 'datetime',
         'returned_at' => 'datetime',
     ];
-
-    // --- Relacionamentos ---
 
     // Um empréstimo pertence a um Usuário
     public function user()
@@ -35,5 +33,19 @@ class Borrowing extends Model
     public function book()
     {
         return $this->belongsTo(Book::class);
+    }
+    public function scopeActive($query)
+    {
+        return $query->whereNull('returned_at');
+    }
+    public function isActive()
+    {
+        return is_null($this->returned_at);
+    }
+
+    public static function activeLoanForBook($bookId)
+    {
+        // Usa o escopo active() definido acima para evitar repetição de código
+        return self::where('book_id', $bookId)->active()->exists();
     }
 }

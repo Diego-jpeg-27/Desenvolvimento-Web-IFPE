@@ -11,6 +11,13 @@ class BorrowingController extends Controller
 {
     public function store(Request $request, Book $book)
     {
+        // ACL - Verifica se o usuário pode emprestar (Admin/Bibliotecário)
+        $this->authorize('borrow', $book);
+
+        if (Borrowing::activeLoanForBook($book->id)) {
+
+            return redirect()->back()->with('error', 'Este livro já possui um empréstimo ativo e não pode ser emprestado novamente.');
+        }
         $request->validate([
             'user_id' => 'required|exists:users,id',
         ]);
@@ -23,8 +30,10 @@ class BorrowingController extends Controller
 
         return redirect()->route('books.show', $book)->with('success', 'Empréstimo registrado com sucesso.');
     }
+
     public function returnBook(Borrowing $borrowing)
     {
+        $this->authorize('borrow', $borrowing->book);
         $borrowing->update([
             'returned_at' => now(),
         ]);
@@ -36,5 +45,12 @@ class BorrowingController extends Controller
         $borrowings = $user->books()->withPivot('borrowed_at', 'returned_at')->get();
 
         return view('users.borrowings', compact('user', 'borrowings'));
+    }
+
+    public function show(Book $book)
+    {
+        $book->load(['author', 'publisher', 'category']);
+        $users = User::all();
+        return view('books.show', compact('book', 'users'));
     }
 }
