@@ -9,6 +9,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Api\BookControllerApi;
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,4 +48,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/users/{user}', [UserController::class, 'update'])->name('users.update');
 
     Route::patch('/admin/users/{user}/settle-debit', [UserController::class, 'settleDebit'])->name('users.settle');
+
+    Route::apiResource('books', BookControllerApi::class);
 });

@@ -13,7 +13,6 @@ class BorrowingController extends Controller
         $this->authorize('borrow', $book);
 
         if (Borrowing::activeLoanForBook($book->id)) {
-            return redirect()->back()->with('error', 'Este livro já possui um empréstimo ativo e não pode ser emprestado novamente.');
             return redirect()->back()->with('error', 'Este livro já possui um empréstimo ativo.');
         }
 
