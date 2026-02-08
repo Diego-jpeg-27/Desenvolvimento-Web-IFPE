@@ -2,14 +2,6 @@
 
 @section('content')
     <div class="container">
-
-        {{-- Botão Voltar para a Lista de Livros --}}
-        <div class="mb-3">
-            <a href="{{ route('books.index') }}" class="btn btn-secondary btn-sm">
-                <i class="bi bi-arrow-left"></i> Voltar para a Lista de Livros
-            </a>
-        </div>
-
         <div class="d-flex justify-content-between align-items-center my-4">
             <h1>Gerenciar Usuários</h1>
         </div>
@@ -29,6 +21,7 @@
                             <th>Nome</th>
                             <th>Email</th>
                             <th>Papel (Role)</th>
+                            <th>Débito</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -39,7 +32,6 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
-                                    {{-- Lógica visual para destacar os papéis --}}
                                     @if($user->role === 'admin')
                                         <span class="badge bg-danger">Admin</span>
                                     @elseif($user->role === 'bibliotecario')
@@ -49,8 +41,24 @@
                                     @endif
                                 </td>
                                 <td>
-                                    {{-- Botão de Visualizar REMOVIDO para corrigir o erro --}}
-
+                                    {{-- Lógica de exibição do Débito e Botão de Quitação --}}
+                                    @if($user->debit > 0)
+                                        <span class="text-danger fw-bold">
+                                            R$ {{ number_format($user->debit, 2, ',', '.') }}
+                                        </span>
+                                        <form action="{{ route('users.settle', $user) }}" method="POST" class="d-inline ms-2">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="btn btn-outline-success btn-sm"
+                                                onclick="return confirm('Confirmar pagamento do débito de {{ $user->name }}?')">
+                                                <i class="bi bi-cash-stack"></i> Zerar
+                                            </button>
+                                        </form>
+                                    @else
+                                        <span class="text-muted">R$ 0,00</span>
+                                    @endif
+                                </td>
+                                <td>
                                     <a href="{{ route('users.edit', $user) }}" class="btn btn-primary btn-sm">
                                         <i class="bi bi-pencil-square"></i> Editar Papel
                                     </a>

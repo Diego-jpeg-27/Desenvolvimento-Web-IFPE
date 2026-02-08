@@ -46,4 +46,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/admin/users/{user}', [UserController::class, 'update'])->name('users.update');
 
+    Route::patch('/admin/users/{user}/settle-debit', [UserController::class, 'settleDebit'])->name('users.settle');
 });
