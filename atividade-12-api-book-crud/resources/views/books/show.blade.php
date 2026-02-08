@@ -9,7 +9,7 @@
             </a>
         </div>
 
-        {{-- Verificação de Status usando o método do Model --}}
+        {{-- Verificação de Status --}}
         @php
             $isBorrowed = \App\Models\Borrowing::activeLoanForBook($book->id);
         @endphp
@@ -36,7 +36,6 @@
                     <div class="d-flex align-items-center mb-2">
                         <h2 class="mb-0 me-3">{{ $book->title }}</h2>
 
-                        {{-- BADGE DE STATUS --}}
                         @if($isBorrowed)
                             <span class="badge bg-danger fs-6">
                                 <i class="bi bi-bookmark-x"></i> Indisponível (Emprestado)
@@ -61,9 +60,7 @@
             </div>
         </div>
 
-
-        {{-- AREA DE AÇÃO (EMPRÉSTIMO) --}}
-        {{-- Apenas Admin/Bibliotecário veem esta área --}}
+        {{-- AREA DE AÇÃO - EMPRÉSTIMO --}}
         @can('borrow', $book)
             <div class="card mb-4">
                 <div class="card-header bg-light fw-bold">
@@ -71,9 +68,8 @@
                 </div>
                 <div class="card-body">
 
-                    {{-- LÓGICA DE EXIBIÇÃO DO FORMULÁRIO --}}
                     @if($isBorrowed)
-                        {{-- LIVRO EMPRESTADO = MOSTRA AVISO E BLOQUEIA FORM --}}
+                        {{-- LIVRO EMPRESTADO --}}
                         <div class="alert alert-warning d-flex align-items-center" role="alert">
                             <i class="bi bi-exclamation-circle-fill fs-4 me-2"></i>
                             <div>
@@ -81,25 +77,36 @@
                                 É necessário realizar a devolução antes de emprestar novamente.
                             </div>
                         </div>
-
-                        {{-- Botão desabilitado apenas visualmente para reforçar --}}
                         <button class="btn btn-secondary" disabled>
                             <i class="bi bi-plus-circle"></i> Registrar Empréstimo (Indisponível)
                         </button>
 
                     @else
-                        {{-- LIVRO DISPONÍVEL = MOSTRA FORMULÁRIO --}}
+                        {{-- LIVRO DISPONÍVEL --}}
                         <form action="{{ route('books.borrow', $book) }}" method="POST">
                             @csrf
                             <div class="row align-items-end">
                                 <div class="col-md-8 mb-3 mb-md-0">
                                     <label for="user_id" class="form-label">Selecione o Usuário para Empréstimo</label>
+
                                     <select class="form-select" id="user_id" name="user_id" required>
                                         <option value="" selected>Escolha um usuário...</option>
                                         @foreach($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
+                                            @php
+                                                // Verifica status do usuário no loop
+                                                $activeLoans = $user->activeLoansCount();
+                                                $limitReached = $activeLoans >= 5;
+                                            @endphp
+
+                                            <option value="{{ $user->id }}" {{ $limitReached ? 'disabled' : '' }}
+                                                class="{{ $limitReached ? 'text-danger' : '' }}">
+                                                {{ $user->name }}
+                                                ({{ $activeLoans }}/5)
+                                                {{ $limitReached ? '- Limite Atingido' : '' }}
+                                            </option>
                                         @endforeach
                                     </select>
+
                                 </div>
                                 <div class="col-md-4">
                                     <button type="submit" class="btn btn-success w-100">
@@ -134,15 +141,11 @@
                         </thead>
                         <tbody>
                             @foreach($book->users->sortByDesc('pivot.borrowed_at') as $user)
-                                <tr>                                
+                                <tr>
                                     <td>{{ $user->name }}</td>
-                                 
-                                    {{-- Data de Retirada (Com correção Carbon) --}}
                                     <td>
                                         {{ \Carbon\Carbon::parse($user->pivot->borrowed_at)->format('d/m/Y H:i') }}
                                     </td>
-
-                                    {{-- Data de Devolução (Aqui deve aparecer a DATA ou "Em Aberto") --}}
                                     <td>
                                         @if($user->pivot->returned_at)
                                             <span class="text-success">
@@ -152,11 +155,8 @@
                                             <span class="badge bg-warning text-dark">Em Aberto</span>
                                         @endif
                                     </td>
-
-                                    {{-- Status/Ação --}}
                                     <td>
                                         @if(!$user->pivot->returned_at)
-                                            {{-- Se não devolveu, mostra o botão --}}
                                             @can('borrow', $book)
                                                 <form action="{{ route('borrowings.return', $user->pivot->id) }}" method="POST">
                                                     @csrf
@@ -167,7 +167,6 @@
                                                 </form>
                                             @endcan
                                         @else
-                                            {{-- Se já devolveu, mostra o check --}}
                                             <div class="text-success fw-bold">
                                                 <i class="bi bi-check-all fs-5"></i> Concluído
                                             </div>
