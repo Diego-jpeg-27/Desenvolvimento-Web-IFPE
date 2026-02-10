@@ -1,19 +1,43 @@
-# Atividades – Desenvolvimento Web 2 - IFPE Campus Igarassu (2025) 
+# Atividades - Desenvolvimento Web 2 
+## Instituto Federal de Pernambuco (IFPE) - Campus Igarassu 
 
-Curso Superior em **Tecnologia em Sistemas para Internet (TSI)** – IFPE Campus Igarassu  
-**Semestre:** 2025.2  
-**Professor:** Alexandre Strapação Guedes Vianna
+Curso Superior em **Tecnologia em Sistemas para Internet - (TSI)** 
+- **Semestre:** 2025.2  
+- **Professor:** Alexandre Strapação Guedes Vianna
 
 ---
 
-##  Instruções Gerais
+## Introdução
 
-- Cada diretório representa uma atividade, que contem seu próprio ambiente e lógica de negócio.
-- Dentro de cada pasta há um `README.md` explicando o que foi implementado e cada passo feito.
+Este repositório foi estruturado para centralizar o desenvolvimento e o gerenciamento das atividades práticas da disciplina de Desenvolvimento Web entre 2025 e 2026. 
++ Mais do que um portfólio de código, o projeto reflete a aplicação de boas práticas de engenharia de software, separação de responsabilidades em diretórios isolados e um fluxo de trabalho orientado à resolução de problemas.
+
+## Tecnológica e Arquitetura
++ O desenvolvimento desse ecossistema utiliza o **Framework Laravel** como base tecnológica central. 
++ A aplicação fundamenta-se na **arquitetura MVC** (Model-View-Controller), garantindo uma separação clara entre a lógica de negócios, a gestão de dados e a interface do usuário.
+
+## Estrutura de Diretórios 
+Foi adicionado um README.md em cada pasta do projeto, ajuda a explicar o que foi realizando em cada atividade. 
++ Cada pasta é um ambiente Laravel independente. Isso garante o isolamento de dependências e permite testar a evolução do sistema de forma modular, sem interferências entre as versões.
   
 ---
 
-### Lista de Atividades
+## Metodologias e Gestão
+### Aplicando conceitos (Scrum e Kanban) 
+
+O projeto utiliza o ecossistema do GitHub como ferramenta de ALM (Application Lifecycle Management).
+
+Milestones (Scrum): Cada atividade funciona como uma Sprint com objetivos técnicos e prazos definidos.
+
+Issues & Backlog: Requisitos detalhados com checklists de Definition of Done (DoD).
+
+Categorização (Labels): classificadas das tarefas por etiquetas.
+
+Project Board (Kanban): Fluxo de trabalho visual segmentado em To Do, In Progress e Done.
+
+---
+
+## Lista de Atividades
 
 | Nº    | Tema da Atividade                                                  | Pasta                                       | Data inicial | Data final  | Continuação |
 |-------|--------------------------------------------------------------------|---------------------------------------------|--------------|-------------|--------------|
@@ -31,34 +55,38 @@ Curso Superior em **Tecnologia em Sistemas para Internet (TSI)** – IFPE Campus
 | 09.0  | Melhoria da funcionalidade de empréstimo                           | `atividade-09-borrowing-validation`         | 14/11/2025   | 12/12/2025  |
 | 10.0  | Limitar a quantidade de livros emprestados por usuários            | `atividade-10-user-borrowing-limit`         | 14/11/2025   | 19/12/2025  |
 | 11.0  | Implementação de Sistema de Multas por Atraso                      | `atividade-11-user-debt-management`         | 14/11/2025   | 30/01/2026  |
-
----
-⚠️ As próximas atividades serão adicionadas ao longo da disciplina. ⚠️
-
----
-
-## Metodologia Ágil – Scrum
-
-Este projeto utiliza Scrum para organizar e acompanhar as tarefas das Atividades.
-Cada passo da atividade é transformado em issue no GitHub.
-As issues possuem labels (tarefa, funcionalidade, alta prioridade) e checklists com sub-etapas.
-
-As tarefas são movidas no Project Board (Kanban) entre To Do / Em andamento / Concluída conforme o progresso.
-(Para visualizar e controlar facilmente o andamento da sprint).
+| 12.0  | Implementação de API REST para recurso Book                        | `atividade-12-api-book-crud`                | 02/02/2026   | 08/02/2026  |              |
 
 ---
 
-## Tecnologias Utilizadas
+## Ambiente Técnico e Ferramentas
 
-- **HTML5** – Marcações para estruturar as páginas web.  
-- **CSS3** – Estilização visual das páginas.  
-- **JavaScript** – Interatividade no front-end.  
-- **PHP** – Linguagem de programação para o back-end.  
-- **Composer** – Gerenciador de dependências para PHP.  
-- **Laravel** – Framework PHP para desenvolvimento web com padrão MVC.  
-- **MySQL** – Banco de dados relacional para armazenamento dos dados.
-- Git/GitHub
-  
+<div align="left">
+  <img src="https://img.shields.io/badge/Laravel-FF2D20?logo=laravel&logoColor=white&style=for-the-badge" height="32" alt="laravel logo"  />
+  <img width="12" />
+  <img src="https://img.shields.io/badge/Composer-885630?logo=composer&logoColor=white&style=for-the-badge" height="32" alt="composer logo"  />
+  <img width="12" />
+  <img src="https://img.shields.io/badge/PHP-777BB4?logo=php&logoColor=black&style=for-the-badge" height="32" alt="php logo"  />
+  <img width="12" />
+  <img src="https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white&style=for-the-badge" height="32" alt="vite logo"  />
+  <img width="12" />
+  <img src="https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white&style=for-the-badge" height="32" alt="npm logo"  />
+  <img width="12" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black&style=for-the-badge" height="32" alt="javascript logo"  />
+  <img width="12" />
+  <img src="https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white&style=for-the-badge" height="32" alt="html5 logo"  />
+  <img width="12" />
+  <img src="https://img.shields.io/badge/CSS-1572B6?logo=css&logoColor=white&style=for-the-badge" height="32" alt="css logo"  />
+  <img width="12" />
+  <img src="https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=white&style=for-the-badge" height="32" alt="mysql logo"  />
+  <img width="12" />
+  <img src="https://img.shields.io/badge/Postman-FF6C37?logo=postman&logoColor=black&style=for-the-badge" height="32" alt="postman logo"  />
+  <img width="12" />
+  <img src="https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white&style=for-the-badge" height="32" alt="github logo"  />
+  <img width="12" />
+  <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?logo=visualstudiocode&logoColor=white&style=for-the-badge" height="32" alt="vscode logo"  />
+</div>
+
 ---
 
 ## Desenvolvedor
